@@ -1,0 +1,184 @@
+//============================================================
+// tb_full_system_13.v
+// Testbench cho hệ thống UART + Hamming(13,8)
+// Kiểm tra 3 pha:
+//   1. Truyền bình thường (không lỗi)
+//   2. Chèn lỗi 1 bit (phải tự sửa được)
+//   3. Chèn lỗi 2 bit (phát hiện được lỗi)
+//============================================================
+
+`timescale 1ns / 1ps
+
+module tb_full_system_13;
+
+    //==============================
+    // Tham số cấu hình
+    //==============================
+    parameter CLK_PERIOD     = 10;  // 100 MHz clock
+    parameter CLKS_PER_BIT   = 8;   // UART tốc độ thấp
+    parameter NUM_BYTES      = 13;
+
+    reg clk, rst_n;
+    reg tx_start;
+    reg [7:0] tx_data;
+    wire tx_serial;
+    wire tx_done;
+
+    // UART receiver output
+    wire [7:0] rx_data;
+    wire rx_done;
+    wire single_error, double_error;
+
+    //========================================================
+    // Clock tạo 100MHz
+    //========================================================
+    initial clk = 0;
+    always #(CLK_PERIOD/2) clk = ~clk;
+
+    //========================================================
+    // DUT instantiation
+    //========================================================
+    uart_tx_hamming13 #(.CLKS_PER_BIT(CLKS_PER_BIT)) tx_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .data_in(tx_data),
+        .tx_start(tx_start),
+        .tx_serial(tx_serial),
+        .tx_done(tx_done)
+    );
+
+    // --- Đường truyền có thể chèn lỗi
+    reg rx_line;
+    initial rx_line = 1'b1;
+
+    always @(tx_serial)
+        rx_line = tx_serial; // mặc định không lỗi
+
+    uart_rx_hamming13 #(.CLKS_PER_BIT(CLKS_PER_BIT)) rx_inst (
+        .clk(clk),
+        .rst_n(rst_n),
+        .rx_serial(rx_line),
+        .data_out(rx_data),
+        .rx_done(rx_done),
+        .single_error(single_error),
+        .double_error(double_error)
+    );
+
+    //========================================================
+    // Gửi 1 byte dữ liệu qua UART
+    //========================================================
+    task send_byte(input [7:0] data);
+    begin
+        tx_data = data;
+        tx_start = 1;
+        @(posedge clk);
+        tx_start = 0;
+        wait(tx_done);
+        #(CLKS_PER_BIT*20*CLK_PERIOD); // delay đủ dài cho RX xử lý
+    end
+    endtask
+
+    //========================================================
+    // Chèn lỗi 1 hoặc 2 bit trên đường truyền
+    //========================================================
+    task inject_single_error;
+    begin
+        #(CLKS_PER_BIT*CLK_PERIOD*3); // giữa frame
+        rx_line = ~rx_line;           // lật 1 bit
+        #(CLKS_PER_BIT*CLK_PERIOD);   // giữ 1 chu kỳ bit
+        rx_line = tx_serial;          // khôi phục
+    end
+    endtask
+
+    task inject_double_error;
+    begin
+        #(CLKS_PER_BIT*CLK_PERIOD*2);
+        rx_line = ~rx_line;
+        #(CLKS_PER_BIT*CLK_PERIOD);
+        rx_line = tx_serial;
+        #(CLKS_PER_BIT*CLK_PERIOD*4);
+        rx_line = ~rx_line;
+        #(CLKS_PER_BIT*CLK_PERIOD);
+        rx_line = tx_serial;
+    end
+    endtask
+
+    //========================================================
+    // Bộ dữ liệu mẫu
+    //========================================================
+    reg [7:0] data_mem [0:NUM_BYTES-1];
+    integer i;
+
+    initial begin
+        data_mem[0]  = 8'h33;
+        data_mem[1]  = 8'h55;
+        data_mem[2]  = 8'h55;
+        data_mem[3]  = 8'h33;
+        data_mem[4]  = 8'hFF;
+        data_mem[5]  = 8'h48;
+        data_mem[6]  = 8'hD3;
+        data_mem[7]  = 8'hAA;
+        data_mem[8]  = 8'h88;
+        data_mem[9]  = 8'hEE;
+        data_mem[10] = 8'hCC;
+        data_mem[11] = 8'hAA;
+        data_mem[12] = 8'h11;
+    end
+
+    //========================================================
+    // MAIN TEST SEQUENCE
+    //========================================================
+    initial begin
+        $display("# =============================================");
+        $display("# === UART + Hamming(13,8) SYSTEM TEST ===");
+        $display("# =============================================");
+        rst_n = 0;
+        tx_start = 0;
+        #(CLK_PERIOD*10);
+        rst_n = 1;
+        #(CLK_PERIOD*20);
+
+        // -------------------------------------
+        // Phase 1: No error
+        // -------------------------------------
+        $display("# === PHASE 1: NO ERROR ===");
+        for (i = 0; i < NUM_BYTES; i = i + 1) begin
+            send_byte(data_mem[i]);
+            wait(rx_done);
+            $display("# Byte %0d: TX=0x%02h RX=0x%02h SE=%b DE=%b",
+                     i, data_mem[i], rx_data, single_error, double_error);
+        end
+
+        // -------------------------------------
+        // Phase 2: Single-bit error
+        // -------------------------------------
+        $display("# === PHASE 2: SINGLE-BIT ERROR ===");
+        for (i = 0; i < NUM_BYTES; i = i + 1) begin
+            fork
+                send_byte(data_mem[i]);
+                inject_single_error();
+            join
+            wait(rx_done);
+            $display("# Byte %0d: TX=0x%02h RX=0x%02h SE=%b DE=%b",
+                     i, data_mem[i], rx_data, single_error, double_error);
+        end
+
+        // -------------------------------------
+        // Phase 3: Double-bit error
+        // -------------------------------------
+        $display("# === PHASE 3: DOUBLE-BIT ERROR ===");
+        for (i = 0; i < NUM_BYTES; i = i + 1) begin
+            fork
+                send_byte(data_mem[i]);
+                inject_double_error();
+            join
+            wait(rx_done);
+            $display("# Byte %0d: TX=0x%02h RX=0x%02h SE=%b DE=%b",
+                     i, data_mem[i], rx_data, single_error, double_error);
+        end
+
+        $display("# === SIM END ===");
+        $finish;
+    end
+
+endmodule

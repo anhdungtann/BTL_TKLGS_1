@@ -1,0 +1,179 @@
+// File: tb_full_system.v
+`timescale 1ns / 1ps
+
+module tb_full_system;
+
+    // --- Thông số mô phỏng ---
+    // Để mô phỏng nhanh, ta giảm số clock cho mỗi bit
+    // Thay vì 5208 (cho 50MHz/9600baud), ta dùng 10
+    localparam CLKS_PER_BIT = 10;
+    localparam CLK_PERIOD   = 10; // 10 ns -> 100MHz clock
+
+    // --- Tín hiệu ---
+    reg clk;
+    reg reset;
+    
+    // Tín hiệu cho bên gửi
+    reg        start_transmission;
+    reg [3:0]  data_to_send;
+    wire [7:0] encoded_codeword;
+    wire       tx_serial_out;
+    wire       tx_is_busy;
+    
+    // Tín hiệu cho kênh truyền (để tạo lỗi)
+    reg        rx_serial_in;
+
+    // Tín hiệu cho bên nhận
+    wire       data_is_valid;
+    wire [7:0] received_codeword;
+    wire [3:0] final_data_out;
+    wire       single_err_flag;
+    wire       double_err_flag;
+
+    // --- Khởi tạo các Module ---
+    // 1. Bộ mã hóa
+    hamming_encoder encoder (
+        .data_in(data_to_send),
+        .codeword_out(encoded_codeword)
+    );
+
+    // 2. Bộ phát UART
+    uart_tx #(.CLKS_PER_BIT(CLKS_PER_BIT)) uart_transmitter (
+        .clk(clk),
+        .reset(reset),
+        .tx_start(start_transmission),
+        .data_in(encoded_codeword),
+        .tx_serial(tx_serial_out),
+        .tx_busy(tx_is_busy)
+    );
+
+    // 3. Bộ nhận UART
+    uart_rx #(.CLKS_PER_BIT(CLKS_PER_BIT)) uart_receiver (
+        .clk(clk),
+        .reset(reset),
+        .rx_serial(rx_serial_in),
+        .data_out(received_codeword),
+        .rx_valid(data_is_valid)
+    );
+
+    // 4. Bộ giải mã
+    hamming_decoder decoder (
+        .codeword_in(received_codeword),
+        .data_out(final_data_out),
+        .single_error(single_err_flag),
+        .double_error(double_err_flag)
+    );
+
+    // --- Tạo Clock ---
+    initial begin
+        clk = 0;
+        forever #(CLK_PERIOD/2) clk = ~clk;
+    end
+    
+    // --- Mô phỏng kênh truyền ---
+    // Mặc định, kênh truyền hoàn hảo
+    always @(*) begin
+        rx_serial_in = tx_serial_out;
+    end
+
+    // --- Kịch bản Test ---
+    initial begin
+        // Khởi tạo
+        reset = 1;
+        start_transmission = 0;
+        data_to_send = 4'b0000;
+        # (CLK_PERIOD * 2);
+        reset = 0;
+        # (CLK_PERIOD * 10);
+        
+        $display("--- BẮT ĐẦU MÔ PHỎNG ---");
+
+        // === CASE 1: KHÔNG CÓ LỖI ===
+        $display("\n[CASE 1: KHÔNG LỖI]");
+        data_to_send = 4'b1011;
+        start_transmission = 1;
+        #CLK_PERIOD;
+        start_transmission = 0;
+        
+        wait (data_is_valid); // Chờ đến khi nhận xong
+        #1; // Chờ 1 tick để tín hiệu ổn định
+        $display("Data gốc       : %b", data_to_send);
+        $display("Data nhận được : %b", final_data_out);
+        $display("Cờ lỗi         : single=%b, double=%b", single_err_flag, double_err_flag);
+        if(final_data_out === data_to_send && !single_err_flag && !double_err_flag)
+            $display("--> KẾT QUẢ: ĐÚNG");
+        else
+            $display("--> KẾT QUẢ: SAI");
+
+        # (CLK_PERIOD * 20);
+
+        // === CASE 2: LỖI 1 BIT ===
+        $display("\n[CASE 2: LỖI 1 BIT]");
+        data_to_send = 4'b0101;
+        start_transmission = 1;
+        
+        // Tạo lỗi: lật bit D5 (bit thứ 5 được truyền, vị trí index 4 của codeword)
+        // Thời điểm tạo lỗi: 1 start bit + 4 data bit = 5 bit period
+        fork
+            begin
+                # (CLK_PERIOD * CLKS_PER_BIT * 5.5); // Chờ đến giữa bit D5
+                rx_serial_in <= ~rx_serial_in;
+                # (CLK_PERIOD); // Giữ lỗi trong 1 clock
+                // Tín hiệu rx_serial_in sẽ tự quay về đúng giá trị ở chu kỳ clock sau
+            end
+        join_none
+        
+        #CLK_PERIOD;
+        start_transmission = 0;
+        
+        wait(data_is_valid);
+        #1;
+        $display("Data gốc       : %b", data_to_send);
+        $display("Data nhận được : %b", final_data_out);
+        $display("Cờ lỗi         : single=%b, double=%b", single_err_flag, double_err_flag);
+        if(final_data_out === data_to_send && single_err_flag && !double_err_flag)
+            $display("--> KẾT QUẢ: ĐÚNG (Sửa lỗi thành công)");
+        else
+            $display("--> KẾT QUẢ: SAI");
+
+        # (CLK_PERIOD * 20);
+
+        // === CASE 3: LỖI 2 BIT ===
+        $display("\n[CASE 3: LỖI 2 BIT]");
+        data_to_send = 4'b1100;
+        start_transmission = 1;
+        
+        // Tạo 2 lỗi: lật bit P2 (bit 2) và D6 (bit 6)
+        fork
+            begin
+                // Lỗi 1 tại P2 (bit thứ 2, index 1)
+                # (CLK_PERIOD * CLKS_PER_BIT * 2.5);
+                rx_serial_in <= ~rx_serial_in;
+                # (CLK_PERIOD);
+            end
+            begin
+                // Lỗi 2 tại D6 (bit thứ 6, index 5)
+                # (CLK_PERIOD * CLKS_PER_BIT * 6.5);
+                rx_serial_in <= ~rx_serial_in;
+                # (CLK_PERIOD);
+            end
+        join_none
+        
+        #CLK_PERIOD;
+        start_transmission = 0;
+        
+        wait(data_is_valid);
+        #1;
+        $display("Data gốc       : %b", data_to_send);
+        $display("Data nhận được : %b (sẽ sai)", final_data_out);
+        $display("Cờ lỗi         : single=%b, double=%b", single_err_flag, double_err_flag);
+        if(final_data_out !== data_to_send && !single_err_flag && double_err_flag)
+            $display("--> KẾT QUẢ: ĐÚNG (Phát hiện lỗi kép thành công)");
+        else
+            $display("--> KẾT QUẢ: SAI");
+
+        # (CLK_PERIOD * 20);
+        $finish;
+    end
+
+endmodule

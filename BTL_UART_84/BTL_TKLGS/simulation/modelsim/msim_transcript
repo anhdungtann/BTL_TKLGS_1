@@ -1,0 +1,143 @@
+# Reading pref.tcl
+# do hammingcode_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL {C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/hamming_encoder.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 00:36:21 on Oct 27,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL" C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/hamming_encoder.v 
+# -- Compiling module hamming_encoder
+# 
+# Top level modules:
+# 	hamming_encoder
+# End time: 00:36:21 on Oct 27,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL {C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/tb_full_system.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 00:36:21 on Oct 27,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL" C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/tb_full_system.v 
+# -- Compiling module tb_full_system
+# 
+# Top level modules:
+# 	tb_full_system
+# End time: 00:36:22 on Oct 27,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL {C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/uart_rx.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 00:36:22 on Oct 27,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL" C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/uart_rx.v 
+# -- Compiling module uart_rx
+# 
+# Top level modules:
+# 	uart_rx
+# End time: 00:36:22 on Oct 27,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL {C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/uart_tx.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 00:36:22 on Oct 27,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL" C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/uart_tx.v 
+# -- Compiling module uart_tx
+# 
+# Top level modules:
+# 	uart_tx
+# End time: 00:36:22 on Oct 27,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL {C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/hamming_decoder.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 00:36:22 on Oct 27,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL" C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/hamming_decoder.v 
+# -- Compiling module hamming_decoder
+# 
+# Top level modules:
+# 	hamming_decoder
+# End time: 00:36:22 on Oct 27,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL {C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/hamming_encoder.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 00:36:22 on Oct 27,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL" C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/hamming_encoder.v 
+# -- Compiling module hamming_encoder
+# 
+# Top level modules:
+# 	hamming_encoder
+# End time: 00:36:22 on Oct 27,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs="+acc"  tb_full_system
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs=""+acc"" tb_full_system 
+# Start time: 00:36:22 on Oct 27,2025
+# Loading work.tb_full_system
+# Loading work.uart_tx
+# Loading work.uart_rx
+# Loading work.hamming_encoder
+# Loading work.hamming_decoder
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ACTUAL_BITS=51 (PADDED_TO=52) groups=13 encoded_bytes=13
+# 
+# === PHASE 1: NO ERROR ===
+# Sent byte #0: encoded=0x56  rx=0x56  decoded_nibble=0x3  single_err=0 double_err=0
+# Sent byte #1: encoded=0x9a  rx=0x9a  decoded_nibble=0x5  single_err=0 double_err=0
+# Sent byte #2: encoded=0x9a  rx=0x9a  decoded_nibble=0x5  single_err=0 double_err=0
+# Sent byte #3: encoded=0x56  rx=0x56  decoded_nibble=0x3  single_err=0 double_err=0
+# Sent byte #4: encoded=0xff  rx=0xff  decoded_nibble=0xf  single_err=0 double_err=0
+# Sent byte #5: encoded=0x59  rx=0x59  decoded_nibble=0x4  single_err=0 double_err=0
+# Sent byte #6: encoded=0x6a  rx=0x6a  decoded_nibble=0xd  single_err=0 double_err=0
+# Sent byte #7: encoded=0x65  rx=0x65  decoded_nibble=0xa  single_err=0 double_err=0
+# Sent byte #8: encoded=0xf0  rx=0xf0  decoded_nibble=0x8  single_err=0 double_err=0
+# Sent byte #9: encoded=0x3c  rx=0x3c  decoded_nibble=0xe  single_err=0 double_err=0
+# Sent byte #10: encoded=0xa9  rx=0xa9  decoded_nibble=0xc  single_err=0 double_err=0
+# Sent byte #11: encoded=0x65  rx=0x65  decoded_nibble=0xa  single_err=0 double_err=0
+# Sent byte #12: encoded=0xc3  rx=0xc3  decoded_nibble=0x1  single_err=0 double_err=0
+# 
+# === PHASE 2: SINGLE-BIT ERROR (should be corrected) ===
+# Sent byte #0: encoded=0x56  rx=0x54  decoded_nibble=0x3  single_err=1 double_err=0
+# Sent byte #1: encoded=0x9a  rx=0x98  decoded_nibble=0x5  single_err=1 double_err=0
+# Sent byte #2: encoded=0x9a  rx=0x98  decoded_nibble=0x5  single_err=1 double_err=0
+# Sent byte #3: encoded=0x56  rx=0x54  decoded_nibble=0x3  single_err=1 double_err=0
+# Sent byte #4: encoded=0xff  rx=0xfd  decoded_nibble=0xf  single_err=1 double_err=0
+# Sent byte #5: encoded=0x59  rx=0x5b  decoded_nibble=0x4  single_err=1 double_err=0
+# Sent byte #6: encoded=0x6a  rx=0x68  decoded_nibble=0xd  single_err=1 double_err=0
+# Sent byte #7: encoded=0x65  rx=0x67  decoded_nibble=0xa  single_err=1 double_err=0
+# Sent byte #8: encoded=0xf0  rx=0xf2  decoded_nibble=0x8  single_err=1 double_err=0
+# Sent byte #9: encoded=0x3c  rx=0x3e  decoded_nibble=0xe  single_err=1 double_err=0
+# Sent byte #10: encoded=0xa9  rx=0xab  decoded_nibble=0xc  single_err=1 double_err=0
+# Sent byte #11: encoded=0x65  rx=0x67  decoded_nibble=0xa  single_err=1 double_err=0
+# Sent byte #12: encoded=0xc3  rx=0xc1  decoded_nibble=0x1  single_err=1 double_err=0
+# 
+# === PHASE 3: DOUBLE-BIT ERROR (should be detected) ===
+# Sent byte #0: encoded=0x56  rx=0x74  decoded_nibble=0xa  single_err=0 double_err=1
+# Sent byte #1: encoded=0x9a  rx=0xb8  decoded_nibble=0xc  single_err=0 double_err=1
+# Sent byte #2: encoded=0x9a  rx=0xb8  decoded_nibble=0xc  single_err=0 double_err=1
+# Sent byte #3: encoded=0x56  rx=0x74  decoded_nibble=0xa  single_err=0 double_err=1
+# Sent byte #4: encoded=0xff  rx=0xdd  decoded_nibble=0x6  single_err=0 double_err=1
+# Sent byte #5: encoded=0x59  rx=0x7b  decoded_nibble=0xd  single_err=0 double_err=1
+# Sent byte #6: encoded=0x6a  rx=0x48  decoded_nibble=0x4  single_err=0 double_err=1
+# Sent byte #7: encoded=0x65  rx=0x47  decoded_nibble=0x3  single_err=0 double_err=1
+# Sent byte #8: encoded=0xf0  rx=0xd2  decoded_nibble=0x1  single_err=0 double_err=1
+# Sent byte #9: encoded=0x3c  rx=0x1e  decoded_nibble=0x7  single_err=0 double_err=1
+# Sent byte #10: encoded=0xa9  rx=0x8b  decoded_nibble=0x5  single_err=0 double_err=1
+# Sent byte #11: encoded=0x65  rx=0x47  decoded_nibble=0x3  single_err=0 double_err=1
+# Sent byte #12: encoded=0xc3  rx=0xe1  decoded_nibble=0x8  single_err=0 double_err=1
+# 
+# === SIM END ===
+# ** Note: $finish    : C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/tb_full_system.v(120)
+#    Time: 4840711 ns  Iteration: 0  Instance: /tb_full_system
+# 1
+# Break in Module tb_full_system at C:/Users/tad29/OneDrive/Documents/Quatus_Project/BTL/tb_full_system.v line 120
+# End time: 00:40:56 on Oct 27,2025, Elapsed time: 0:04:34
+# Errors: 0, Warnings: 0

@@ -1,0 +1,19 @@
+// File: hamming_encoder.v
+// Chức năng: Mã hóa 4 bit dữ liệu thành 8 bit từ mã Hamming(8,4) SECDED.
+module hamming_encoder (
+    input  wire [3:0] data_in,      // Dữ liệu vào (D7, D6, D5, D3)
+    output wire [7:0] codeword_out  // Từ mã ra (P8, D7, D6, D5, P4, D3, P2, P1)
+);
+
+    wire d7 = data_in[3];
+    wire d6 = data_in[2];
+    wire d5 = data_in[1];
+    wire d3 = data_in[0];
+
+    wire p1 = d3 ^ d5 ^ d7;
+    wire p2 = d3 ^ d6 ^ d7;
+    wire p4 = d5 ^ d6 ^ d7;
+    wire p8 = p1 ^ p2 ^ d3 ^ p4 ^ d5 ^ d6 ^ d7;
+
+    assign codeword_out = {p8, d7, d6, d5, p4, d3, p2, p1};
+endmodule

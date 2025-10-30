@@ -1,0 +1,125 @@
+# Reading pref.tcl
+# do hamming13_encoder_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 2020.1 Lib Mapping Utility 2020.02 Feb 28 2020
+# vmap work rtl_work 
+# Copying C:/intelFPGA_lite/20.1/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138 {C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/hamming13_encoder.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:14:15 on Oct 30,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138" C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/hamming13_encoder.v 
+# -- Compiling module hamming13_encoder
+# 
+# Top level modules:
+# 	hamming13_encoder
+# End time: 12:14:15 on Oct 30,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138 {C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/tb_full_system_13.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:14:15 on Oct 30,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138" C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/tb_full_system_13.v 
+# -- Compiling module tb_full_system_13
+# 
+# Top level modules:
+# 	tb_full_system_13
+# End time: 12:14:15 on Oct 30,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138 {C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/hamming13_encoder.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:14:15 on Oct 30,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138" C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/hamming13_encoder.v 
+# -- Compiling module hamming13_encoder
+# 
+# Top level modules:
+# 	hamming13_encoder
+# End time: 12:14:15 on Oct 30,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138 {C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/hamming13_decoder.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:14:15 on Oct 30,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138" C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/hamming13_decoder.v 
+# -- Compiling module hamming13_decoder
+# 
+# Top level modules:
+# 	hamming13_decoder
+# End time: 12:14:15 on Oct 30,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138 {C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/uart_tx_hamming13.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:14:15 on Oct 30,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138" C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/uart_tx_hamming13.v 
+# -- Compiling module uart_tx_hamming13
+# 
+# Top level modules:
+# 	uart_tx_hamming13
+# End time: 12:14:15 on Oct 30,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138 {C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/uart_rx_hamming13.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 12:14:15 on Oct 30,2025
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138" C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/uart_rx_hamming13.v 
+# -- Compiling module uart_rx_hamming13
+# 
+# Top level modules:
+# 	uart_rx_hamming13
+# End time: 12:14:15 on Oct 30,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs="+acc"  tb_full_system_13
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L fiftyfivenm_ver -L rtl_work -L work -voptargs=""+acc"" tb_full_system_13 
+# Start time: 12:14:15 on Oct 30,2025
+# Loading work.tb_full_system_13
+# Loading work.uart_tx_hamming13
+# Loading work.hamming13_encoder
+# Loading work.uart_rx_hamming13
+# Loading work.hamming13_decoder
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# ACTUAL_BITS=51 (PADDED_TO=56) NUM_BYTES=7
+# 
+# === PHASE 1: NO ERROR ===
+# Sent byte #0: data_in=0x53  decoded_out=0x53  single_err=0 double_err=0
+# Sent byte #1: data_in=0xd5  decoded_out=0xd5  single_err=0 double_err=0
+# Sent byte #2: data_in=0x3c  decoded_out=0x3c  single_err=0 double_err=0
+# Sent byte #3: data_in=0xb5  decoded_out=0xb5  single_err=0 double_err=0
+# Sent byte #4: data_in=0xa2  decoded_out=0xa2  single_err=0 double_err=0
+# Sent byte #5: data_in=0xb3  decoded_out=0xb3  single_err=0 double_err=0
+# Sent byte #6: data_in=0x06  decoded_out=0x06  single_err=0 double_err=0
+# 
+# === PHASE 2: SINGLE-BIT ERROR (should be corrected) ===
+# Sent byte #0: data_in=0x53  decoded_out=0x53  single_err=1 double_err=0
+# Sent byte #1: data_in=0xd5  decoded_out=0xd5  single_err=1 double_err=0
+# Sent byte #2: data_in=0x3c  decoded_out=0x3c  single_err=1 double_err=0
+# Sent byte #3: data_in=0xb5  decoded_out=0xb5  single_err=1 double_err=0
+# Sent byte #4: data_in=0xa2  decoded_out=0xa2  single_err=1 double_err=0
+# Sent byte #5: data_in=0xb3  decoded_out=0xb3  single_err=1 double_err=0
+# Sent byte #6: data_in=0x06  decoded_out=0x06  single_err=1 double_err=0
+# 
+# === PHASE 3: DOUBLE-BIT ERROR (should be detected) ===
+# Sent byte #0: data_in=0x53  decoded_out=0xd3  single_err=0 double_err=1
+# Sent byte #1: data_in=0xd5  decoded_out=0x55  single_err=0 double_err=1
+# Sent byte #2: data_in=0x3c  decoded_out=0xbc  single_err=0 double_err=1
+# Sent byte #3: data_in=0xb5  decoded_out=0x35  single_err=0 double_err=1
+# Sent byte #4: data_in=0xa2  decoded_out=0x22  single_err=0 double_err=1
+# Sent byte #5: data_in=0xb3  decoded_out=0x33  single_err=0 double_err=1
+# Sent byte #6: data_in=0x06  decoded_out=0x86  single_err=0 double_err=1
+# 
+# === SIM END ===
+# ** Note: $finish    : C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/tb_full_system_13.v(125)
+#    Time: 4575530 ns  Iteration: 0  Instance: /tb_full_system_13
+# 1
+# Break in Module tb_full_system_13 at C:/Users/tad29/OneDrive/Desktop/ThietKeLogicSo/BTL_UART_138/tb_full_system_13.v line 125
+# End time: 12:27:25 on Oct 30,2025, Elapsed time: 0:13:10
+# Errors: 0, Warnings: 0

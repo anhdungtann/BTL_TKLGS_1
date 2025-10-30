@@ -1,0 +1,38 @@
+// File: hamming_decoder.v
+// Chức năng: Giải mã, sửa 1 lỗi, phát hiện 2 lỗi từ từ mã Hamming(8,4).
+module hamming_decoder (
+    input  wire [7:0] codeword_in,
+    output reg  [3:0] data_out,
+    output reg        single_error,
+    output reg        double_error
+);
+
+    wire c8=codeword_in[7], c7=codeword_in[6], c6=codeword_in[5], c5=codeword_in[4],
+         c4=codeword_in[3], c3=codeword_in[2], c2=codeword_in[1], c1=codeword_in[0];
+
+    wire s1 = c1 ^ c3 ^ c5 ^ c7;
+    wire s2 = c2 ^ c3 ^ c6 ^ c7;
+    wire s4 = c4 ^ c5 ^ c6 ^ c7;
+    wire [2:0] error_position = {s4, s2, s1};
+    wire p_check = c8 ^ c7 ^ c6 ^ c5 ^ c4 ^ c3 ^ c2 ^ c1;
+
+    always @(*) begin
+        single_error = 1'b0;
+        double_error = 1'b0;
+        reg [7:0] corrected_codeword = codeword_in;
+
+        if (error_position != 3'b0) begin
+            if (p_check == 1'b1) begin
+                single_error = 1'b1;
+                corrected_codeword[error_position - 1] = ~codeword_in[error_position - 1];
+            end else begin
+                double_error = 1'b1;
+            end
+        end else if (p_check == 1'b1) begin
+            single_error = 1'b1;
+            corrected_codeword[7] = ~codeword_in[7];
+        end
+
+        data_out = {corrected_codeword[6], corrected_codeword[5], corrected_codeword[4], corrected_codeword[2]};
+    end
+endmodule
